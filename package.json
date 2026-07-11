@@ -1,0 +1,33 @@
+{
+  "name": "ig-autopilot",
+  "version": "0.1.0",
+  "description": "Schedule and auto-publish Instagram posts via the official Graph API, with Claude-drafted captions. Runs free on GitHub Actions.",
+  "type": "module",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "publish-due": "node src/publish.js",
+    "dry-run": "node src/publish.js --dry-run",
+    "generate": "node src/generate.js",
+    "autopilot": "node src/autopilot.js",
+    "reply": "node src/reply.js",
+    "reply-dry-run": "node src/reply.js --dry-run",
+    "scout": "node src/scout.js",
+    "create-cards": "node src/create.js",
+    "sample-card": "node src/create.js --sample",
+    "refresh-token": "node src/refresh-token.js"
+  },
+  "keywords": [
+    "instagram",
+    "automation",
+    "scheduler",
+    "graph-api",
+    "claude",
+    "social-media"
+  ],
+  "dependencies": {
+    "sharp": "^0.35.3"
+  }
+}

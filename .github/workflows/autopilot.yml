@@ -1,0 +1,50 @@
+name: Autopilot — caption & schedule new selfies
+
+on:
+  push:
+    paths:
+      - "media/**"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ig-autopilot
+  cancel-in-progress: false
+
+jobs:
+  caption:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install renderer dependency
+        run: npm install --no-audit --no-fund
+
+      - name: Caption + overlay + schedule new selfies
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          ANTHROPIC_MODEL: ${{ vars.ANTHROPIC_MODEL }}
+          MEDIA_BASE_URL: ${{ vars.MEDIA_BASE_URL }}
+          POST_DAYS: ${{ vars.POST_DAYS }}
+          POST_TIME_UTC: ${{ vars.POST_TIME_UTC }}
+          AUTOPILOT_REVIEW: ${{ vars.AUTOPILOT_REVIEW }}
+        run: node src/autopilot.js
+
+      - name: Commit rendered posts + queue
+        run: |
+          if [[ -n "$(git status --porcelain media/rendered content/)" ]]; then
+            git config user.name "ig-autopilot[bot]"
+            git config user.email "actions@users.noreply.github.com"
+            git add media/rendered content/queue.json content/lines.json
+            git pull --rebase origin ${GITHUB_REF_NAME} || true
+            git commit -m "chore: captioned + scheduled new selfies [skip ci]"
+            git push
+          else
+            echo "No new posts to commit."
+          fi

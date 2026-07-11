@@ -1,0 +1,50 @@
+name: Reply to new comments
+
+on:
+  schedule:
+    # :15 and :45 — offset from the publisher's :00/:30 so they never collide.
+    - cron: "15,45 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ig-reply
+  cancel-in-progress: false
+
+jobs:
+  reply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Draft and post replies
+        env:
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          IG_API_VERSION: ${{ vars.IG_API_VERSION }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          ANTHROPIC_MODEL: ${{ vars.ANTHROPIC_MODEL }}
+          REPLY_DRY_RUN: ${{ vars.REPLY_DRY_RUN }}
+          REPLY_RECENT_POSTS: ${{ vars.REPLY_RECENT_POSTS }}
+          REPLY_MAX_AGE_DAYS: ${{ vars.REPLY_MAX_AGE_DAYS }}
+          REPLY_MAX_PER_RUN: ${{ vars.REPLY_MAX_PER_RUN }}
+        run: node src/reply.js
+
+      - name: Commit reply state
+        run: |
+          if [[ -n "$(git status --porcelain content/replied.json)" ]]; then
+            git config user.name "ig-autopilot[bot]"
+            git config user.email "actions@users.noreply.github.com"
+            git add content/replied.json
+            git pull --rebase origin ${GITHUB_REF_NAME} || true
+            git commit -m "chore: reply agent state [skip ci]"
+            git push
+          else
+            echo "No state changes to commit."
+          fi

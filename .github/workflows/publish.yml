@@ -1,0 +1,46 @@
+name: Publish due Instagram posts
+
+on:
+  schedule:
+    # Every 30 minutes. GitHub cron is best-effort (can be delayed a few minutes),
+    # which is fine for social posting. Times are UTC.
+    - cron: "*/30 * * * *"
+  workflow_dispatch: # lets you run it manually from the Actions tab
+
+# Needed so the job can commit the updated queue.json back to the repo.
+permissions:
+  contents: write
+
+concurrency:
+  group: ig-publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Publish anything due
+        env:
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          IG_API_VERSION: ${{ vars.IG_API_VERSION }}
+          MEDIA_BASE_URL: ${{ vars.MEDIA_BASE_URL }}
+        run: node src/publish.js
+
+      - name: Commit queue status changes
+        run: |
+          if [[ -n "$(git status --porcelain content/queue.json)" ]]; then
+            git config user.name "ig-autopilot[bot]"
+            git config user.email "actions@users.noreply.github.com"
+            git add content/queue.json
+            git commit -m "chore: update queue status [skip ci]"
+            git push
+          else
+            echo "No queue changes to commit."
+          fi

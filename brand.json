@@ -1,0 +1,50 @@
+{
+  "name": "sayso",
+  "handle": "@2girls1cap_",
+  "product": "Statement caps — one-liners you wear on your head",
+  "tagline": "No cap. Wear your thoughts.",
+  "font": "Archivo Black",
+  "audience": "Women in their 20s-30s who communicate in screenshots: dating-app carnage, situationship humor, self-aware chaos, deadpan confidence. They buy the cap because it says the thing they were already thinking.",
+  "voice": "Unhinged but in control. Deadpan. A punchline, never a caption. Zero corporate, zero inspirational. Occasionally filthy, always clever. Lowercase. The joke does everything.",
+  "registers": [
+    "dating / ex / situationship carnage",
+    "rock bottom, reframed as a flex",
+    "self-aware chaos and delusion",
+    "money / ambition, twisted",
+    "deadpan horny (tasteful, clever, never crude-for-crude's-sake)"
+  ],
+  "structures": ["reversal", "escalation", "misdirection", "fake-vulnerable then punch", "resume/corporate metaphor for personal disaster"],
+  "voice_examples": [
+    "i'm not justin. i won't say sorry. i'll block you.",
+    "biggest mistake: i gave my heart to someone who needed a brain",
+    "if it doesn't bring me inspiration, income, or orgasms, i don't have time for it",
+    "been to more gates than dates this year",
+    "when i said i liked it rough i don't mean my entire life",
+    "life sucks but i suck better",
+    "fall in love with your problems, maybe they will leave you too",
+    "me adding geologist to my resume after hitting rock bottom",
+    "a gf is temporary. being a hot ex is forever",
+    "here's a rock from the rock bottom i hit",
+    "my mama don't like you. and she likes everyone",
+    "single by choice. maybe just not my choice.",
+    "I ran a background check on myself. wouldn't date me either.",
+    "he said I was hard to love. skill issue.",
+    "my type is emotionally unavailable and 6 feet from reaching his potential",
+    "emotionally I'm at capacity. physically I'm at brunch.",
+    "I don't have exes, I have case studies",
+    "I didn't get rejected. I got redirected to better.",
+    "delusion is just confidence that hasn't been proven right yet",
+    "I gave him the best 2-3 weeks of my life",
+    "my ex is my ex because I have executive function",
+    "he wanted a trophy wife. I wanted a trophy life. one of us got what they wanted.",
+    "if I'm too much go find less",
+    "karma is like 69. you get what you give.",
+    "hey siri, turn off my feelings forever"
+  ],
+  "dont": [
+    "sound like a brand or explain the joke",
+    "be cozy, wholesome, or inspirational",
+    "use hashtags inside the on-image text",
+    "be crude just to be crude — filthy must also be clever"
+  ]
+}

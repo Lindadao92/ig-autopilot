@@ -1,0 +1,31 @@
+name: Generate captions
+
+on:
+  workflow_dispatch:
+    inputs:
+      brief:
+        description: "What's the post about? (e.g. 'launch week, new corduroy hat, cozy fall vibe')"
+        required: true
+        type: string
+      variants:
+        description: "How many caption options"
+        required: false
+        default: "3"
+        type: string
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Draft captions with Claude
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          ANTHROPIC_MODEL: ${{ vars.ANTHROPIC_MODEL }}
+        run: |
+          node src/generate.js "${{ inputs.brief }}" --variants "${{ inputs.variants }}"

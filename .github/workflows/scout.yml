@@ -1,0 +1,48 @@
+name: Morning engagement briefing
+
+on:
+  schedule:
+    # 07:00 UTC = 9am Berlin — briefing ready with your coffee.
+    - cron: "0 7 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ig-scout
+  cancel-in-progress: false
+
+jobs:
+  scout:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Find targets and draft comments
+        env:
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          IG_API_VERSION: ${{ vars.IG_API_VERSION }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          ANTHROPIC_MODEL: ${{ vars.ANTHROPIC_MODEL }}
+          SCOUT_HASHTAGS: ${{ vars.SCOUT_HASHTAGS }}
+          SCOUT_TARGETS: ${{ vars.SCOUT_TARGETS }}
+        run: node src/scout.js
+
+      - name: Commit briefing
+        run: |
+          if [[ -n "$(git status --porcelain content/)" ]]; then
+            git config user.name "ig-autopilot[bot]"
+            git config user.email "actions@users.noreply.github.com"
+            git add content/engage content/scouted.json
+            git pull --rebase origin ${GITHUB_REF_NAME} || true
+            git commit -m "chore: morning engagement briefing [skip ci]"
+            git push
+          else
+            echo "No briefing changes to commit."
+          fi

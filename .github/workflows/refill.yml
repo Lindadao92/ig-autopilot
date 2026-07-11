@@ -1,0 +1,57 @@
+name: Refill queue with statement cards
+
+on:
+  schedule:
+    # 06:00 UTC daily — cards generated and scheduled before the day's post.
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ig-refill
+  cancel-in-progress: false
+
+jobs:
+  refill:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install renderer dependency
+        run: npm install --no-audit --no-fund
+
+      - name: Generate statement cards
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          ANTHROPIC_MODEL: ${{ vars.ANTHROPIC_MODEL }}
+          REFILL_TARGET_POSTS: ${{ vars.REFILL_TARGET_POSTS }}
+        run: node src/create.js
+
+      - name: Caption + schedule the new cards
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          ANTHROPIC_MODEL: ${{ vars.ANTHROPIC_MODEL }}
+          MEDIA_BASE_URL: ${{ vars.MEDIA_BASE_URL }}
+          POST_DAYS: ${{ vars.POST_DAYS }}
+          POST_TIME_UTC: ${{ vars.POST_TIME_UTC }}
+          AUTOPILOT_REVIEW: ${{ vars.AUTOPILOT_REVIEW }}
+        run: node src/autopilot.js
+
+      - name: Commit cards and queue
+        run: |
+          if [[ -n "$(git status --porcelain media/ content/)" ]]; then
+            git config user.name "ig-autopilot[bot]"
+            git config user.email "actions@users.noreply.github.com"
+            git add media content/queue.json content/lines.json
+            git pull --rebase origin ${GITHUB_REF_NAME} || true
+            git commit -m "chore: refill queue with generated cards [skip ci]"
+            git push
+          else
+            echo "Queue already topped up."
+          fi
