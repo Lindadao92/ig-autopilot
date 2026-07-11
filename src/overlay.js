@@ -26,6 +26,11 @@ const W = 1080;
 const H = 1350; // 4:5
 const SIDE_PAD = 70;
 const BAND_PAD = Math.round(H * 0.06); // gap from top/bottom edge
+const FACE_GAP = Math.round(H * 0.045); // hard safety gap between text and face
+// Where we assume the face sits (as a fraction of the 4:5 frame) if the vision
+// step doesn't report one — a centered portrait, leaving top & bottom clear.
+const DEFAULT_FACE_BAND = { top: 0.28, bottom: 0.74 };
+const FONT_STEPS = [68, 60, 54, 48, 42, 38, 34, 30];
 
 function esc(s) {
   return s
@@ -52,36 +57,73 @@ function wrap(text, fontSize) {
   return rows;
 }
 
-/**
- * Build the transparent SVG text layer. Exported for testing.
- * position: "top" anchors the block near the top edge; "bottom" near the bottom.
- */
-export function buildOverlaySvg(line, opts = {}) {
-  const position = opts.position === "bottom" ? "bottom" : "top";
-  const text = (opts.lowercase === false ? line : line.toLowerCase()).trim();
+const clamp01 = (n) => Math.min(1, Math.max(0, Number.isFinite(n) ? n : 0));
 
-  let fontSize = 68;
-  let rows = null;
-  for (const fs of [68, 60, 54, 48, 42, 38]) {
-    const r = wrap(text, fs);
-    if (r && r.length <= 3) {
-      fontSize = fs;
-      rows = r;
-      break;
+/** Largest font whose wrapped block (≤4 rows) fits within `availH` px. */
+function fitToHeight(text, availH) {
+  for (const fs of FONT_STEPS) {
+    const rows = wrap(text, fs);
+    if (!rows || rows.length > 4) continue;
+    const lineHeight = Math.round(fs * 1.14);
+    if (rows.length * lineHeight <= availH) {
+      return { fontSize: fs, rows, lineHeight };
     }
   }
-  if (!rows) {
-    fontSize = 35;
-    rows = wrap(text, 35) || [text];
+  return null;
+}
+
+/**
+ * Build the transparent SVG text layer. Exported for testing.
+ *
+ * Places the caption in the clear band (top or bottom) furthest from the face,
+ * sized so the block never crosses into the face region + a safety gap. Falls
+ * back to the other band, then to the roomier band at min size, if needed.
+ *
+ * opts.faceBand: { top, bottom } as fractions (0=top edge, 1=bottom) of the
+ * final 4:5 frame — the vertical span the head/face occupies.
+ */
+export function buildOverlaySvg(line, opts = {}) {
+  const text = (opts.lowercase === false ? line : line.toLowerCase()).trim();
+  const fb = opts.faceBand || DEFAULT_FACE_BAND;
+  const faceTop = clamp01(fb.top) * H;
+  const faceBottom = clamp01(fb.bottom) * H;
+
+  // Clear regions above and below the face (with a safety gap).
+  const topRegion = { a: BAND_PAD, b: Math.max(BAND_PAD, faceTop - FACE_GAP) };
+  const botRegion = { a: Math.min(H - BAND_PAD, faceBottom + FACE_GAP), b: H - BAND_PAD };
+  const heightOf = (r) => Math.max(0, r.b - r.a);
+
+  const requested = opts.position === "bottom" ? "bottom" : "top";
+  let position = requested;
+  let region = position === "bottom" ? botRegion : topRegion;
+  let fit = fitToHeight(text, heightOf(region));
+
+  // Doesn't fit the requested band? Try the other one.
+  if (!fit) {
+    const other = position === "bottom" ? "top" : "bottom";
+    const otherRegion = other === "bottom" ? botRegion : topRegion;
+    const otherFit = fitToHeight(text, heightOf(otherRegion));
+    if (otherFit) {
+      position = other;
+      region = otherRegion;
+      fit = otherFit;
+    }
+  }
+  // Still nothing (face nearly fills the frame): use the roomier band, min font.
+  if (!fit) {
+    const useTop = heightOf(topRegion) >= heightOf(botRegion);
+    position = useTop ? "top" : "bottom";
+    region = useTop ? topRegion : botRegion;
+    const fs = 30;
+    fit = { fontSize: fs, rows: wrap(text, fs) || [text], lineHeight: Math.round(fs * 1.14) };
   }
 
-  const lineHeight = Math.round(fontSize * 1.14);
+  const { fontSize, rows, lineHeight } = fit;
   let firstBaseline;
   if (position === "bottom") {
-    const lastBaseline = H - BAND_PAD;
-    firstBaseline = lastBaseline - (rows.length - 1) * lineHeight;
+    firstBaseline = region.b - (rows.length - 1) * lineHeight;
   } else {
-    firstBaseline = BAND_PAD + fontSize;
+    firstBaseline = region.a + fontSize;
   }
 
   const tspans = rows

@@ -109,29 +109,37 @@ function buildVisionSystem(brand) {
     JSON.stringify(brand, null, 2),
     "",
     "JOB 1 — WRITE THE LINE:",
-    "- One original one-liner in the brand voice, to be printed ON the photo AND",
-    "  used as the caption. 4-13 words. Lowercase. No hashtags, no emojis, no quotes.",
-    "- Match the registers and structures in the brand. It must sound like the",
-    "  voice_examples — deadpan, unhinged-confident, a punchline. Never wholesome.",
-    "- FUNNY IS THE ONLY JOB. Aim for a laugh — the kind of line someone",
-    "  screenshots and sends to the group chat. Surprising, a little unhinged,",
-    "  filthy-but-clever is on-brand. Safe, tame, or generic = failure; if it",
-    "  could go on any influencer's photo, it's wrong. Land a real punchline.",
-    "- You MAY riff on what's in the photo (wine, travel, an outfit, a mood) but",
-    "  the joke leads; the photo is just the excuse.",
+    "- One original one-liner in the brand voice, printed ON the photo AND used as",
+    "  the caption. 4-13 words. Lowercase. No hashtags, no emojis, no quotes.",
+    "- CRITICAL: write a STANDALONE PUNCHLINE, not a description of the photo.",
+    "  Study the voice_examples — they are self-aware dating/ex/delusion jokes that",
+    "  would land with NO photo at all ('i don't have exes, i have case studies').",
+    "  Do NOT narrate what's in the image ('two seafood pastas', 'won the pot',",
+    "  'held the cat up') — that observational style is BANNED. The photo is not",
+    "  the subject; it's just the backdrop.",
+    "- The line should sound like it belongs in voice_examples: deadpan, unhinged-",
+    "  confident, self-roasting, horny-but-clever, a real punchline someone",
+    "  screenshots. If it could be a caption on any influencer's photo, it's wrong.",
+    "- You may let the photo's MOOD nudge the topic, but never describe the scene.",
     "- Do NOT reuse or closely echo any voice_example or any line in the used list.",
     "",
-    "JOB 2 — PLACE THE TEXT (so it never covers the face):",
-    "- Report where the face is and which horizontal band is clearest for text.",
-    '- "position": "top" if the area above the face is clearer, "bottom" if below is clearer.',
+    "JOB 2 — PLACE THE TEXT (it must NEVER touch the face):",
+    "- The image will be CENTER-CROPPED to a vertical 4:5 frame (equal amounts",
+    "  trimmed from top+bottom of a taller photo, or left+right of a wider one).",
+    "  Reason about that FINAL cropped frame, not the original.",
+    "- Find the head/face in the cropped frame and report face_band = the vertical",
+    "  span it occupies, as fractions from 0.0 (top edge) to 1.0 (bottom edge).",
+    "  Include hair. Be generous — overestimate rather than clip the face.",
+    '- "position": "top" if there is MORE empty space above the face, "bottom" if',
+    "  more below. Pick the roomier side so the text stays well clear of the face.",
     "",
     "OUTPUT: return ONLY valid JSON, no fences, exactly:",
-    '{ "line": string, "position": "top" | "bottom", "alt_text": string }',
+    '{ "line": string, "position": "top" | "bottom", "face_band": { "top": number, "bottom": number }, "alt_text": string }',
     "alt_text = one factual sentence describing the photo (accessibility).",
   ].join("\n");
 }
 
-async function analyzePhoto(filePath, filename, brand, usedLines) {
+export async function analyzePhoto(filePath, filename, brand, usedLines) {
   const b64 = readFileSync(filePath).toString("base64");
   const ext = extname(filename).toLowerCase();
   const mediaType = ext === ".png" ? "image/png" : "image/jpeg";
@@ -235,7 +243,7 @@ async function main() {
   for (const f of candidates) {
     try {
       console.log(`Analyzing ${f} ...`);
-      const { line, position = "top", alt_text } = await analyzePhoto(
+      const { line, position = "top", face_band, alt_text } = await analyzePhoto(
         join(MEDIA_DIR, f),
         f,
         brand,
@@ -247,6 +255,7 @@ async function main() {
       const outRel = `media/rendered/${outName}`;
       await overlayCaption(join(MEDIA_DIR, f), line, join(RENDERED_DIR, outName), {
         position,
+        faceBand: face_band,
       });
 
       const slot = nextSlot(latest);
