@@ -1,13 +1,15 @@
 [
   {
     "id": "2026-07-11-img-0433",
-    "status": "scheduled",
+    "status": "published",
     "publish_at": "2026-07-11T17:00:00.000Z",
     "media_type": "IMAGE",
     "media_url": "https://raw.githubusercontent.com/Lindadao92/ig-autopilot/main/media/rendered/post-img-0433.jpg",
     "alt_text": "A woman in a black dress views her back, standing before a colorful abstract painting on an exposed brick wall with a diagonal shaft of light.",
     "caption": "the art critiqued my choices back",
-    "source_file": "IMG_0433.jpg"
+    "source_file": "IMG_0433.jpg",
+    "published_at": "2026-07-11T17:09:38.959Z",
+    "media_id": "18099638618587015"
   },
   {
     "id": "2026-07-12-img-0492",
