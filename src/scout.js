@@ -1,10 +1,18 @@
 // src/scout.js
 // The outbound engagement co-pilot: "bot finds, human touches."
 //
-// Officially reads the top posts for your niche hashtags (Instagram's hashtag
-// search API — read-only, fully allowed), has Claude pick the best targets and
-// DRAFT a comment for each in your brand voice, and writes a daily briefing to
-// content/engage/YYYY-MM-DD.md.
+// Reads the top posts for your niche hashtags, has Claude pick the best targets
+// and DRAFT a comment for each in your brand voice, and writes a daily briefing
+// to content/engage/YYYY-MM-DD.md.
+//
+// ⚠️ HASHTAG SEARCH REQUIRES A FACEBOOK-LOGIN GRAPH API TOKEN.
+// The Instagram hashtag search endpoints (ig_hashtag_search + {hashtag}/top_media)
+// exist ONLY on the Instagram Graph API via graph.facebook.com with an "EAA..."
+// token. They are NOT part of the Instagram API with Instagram Login (the
+// "IGA..." tokens on graph.instagram.com). With an Instagram Login token these
+// calls fail and the briefing comes back empty. To use scouting, set an EAA
+// token and IG_GRAPH_HOST=https://graph.facebook.com. Publishing and replies
+// work fine on either host.
 //
 // You then spend ~10 minutes posting the good ones from your phone. Human
 // fingers, human pace, your real judgment on every comment = zero ban risk.
@@ -143,6 +151,15 @@ async function main() {
   const seen = new Set(state.map((s) => s.media_id));
 
   // 1) Gather candidates from hashtag top-media (official, read-only).
+  // Note: hashtag search only exists on the Facebook-Login Graph API. On the
+  // Instagram Login API (graph.instagram.com) these calls fail per-tag below.
+  if (config.igGraphHost.includes("graph.instagram.com")) {
+    console.warn(
+      "⚠️ Hashtag search is unavailable on the Instagram Login API " +
+        "(graph.instagram.com). Set an EAA token + IG_GRAPH_HOST=https://graph.facebook.com " +
+        "to enable scouting. Continuing — the briefing will likely be empty."
+    );
+  }
   const candidates = [];
   for (const tag of HASHTAGS) {
     try {

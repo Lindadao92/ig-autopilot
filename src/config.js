@@ -35,10 +35,14 @@ function loadDotEnv() {
 loadDotEnv();
 
 export const config = {
-  // Instagram / Meta Graph API
+  // Instagram API with Instagram Login (graph.instagram.com).
+  // Tokens for this API start with "IGA...". If you instead have a Facebook
+  // Login / Instagram Graph API token (starts with "EAA..."), set
+  // IG_GRAPH_HOST=https://graph.facebook.com to switch hosts.
   igUserId: process.env.IG_USER_ID || "",
   igAccessToken: process.env.IG_ACCESS_TOKEN || "",
   igApiVersion: process.env.IG_API_VERSION || "v22.0",
+  igGraphHost: process.env.IG_GRAPH_HOST || "https://graph.instagram.com",
 
   // Anthropic (caption generation)
   anthropicApiKey: process.env.ANTHROPIC_API_KEY || "",

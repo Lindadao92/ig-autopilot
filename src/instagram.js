@@ -1,19 +1,21 @@
 // src/instagram.js
-// Thin client over Meta's Instagram Content Publishing API.
+// Thin client over the Instagram API with Instagram Login (graph.instagram.com).
+// Uses "IGA..." access tokens (not Facebook "EAA..." Graph API tokens).
 // Publishing is always a 2-step "container" flow:
 //   1. Create a media container  -> POST /{ig-user-id}/media
 //   2. (videos/reels) poll until FINISHED -> GET /{container-id}?fields=status_code
 //   3. Publish the container      -> POST /{ig-user-id}/media_publish
 //
-// Docs: https://developers.facebook.com/docs/instagram-platform/content-publishing/
+// The host is configurable via config.igGraphHost (see config.js) so the same
+// client can target graph.facebook.com with an "EAA..." token if ever needed.
+//
+// Docs: https://developers.facebook.com/docs/instagram-platform/instagram-api-with-instagram-login/content-publishing
 // Native fetch (Node 20+) — no dependencies.
 
 import { config } from "./config.js";
 
-const GRAPH = "https://graph.facebook.com";
-
 function base() {
-  return `${GRAPH}/${config.igApiVersion}`;
+  return `${config.igGraphHost}/${config.igApiVersion}`;
 }
 
 export async function graphPost(path, params) {
