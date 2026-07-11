@@ -12,7 +12,8 @@
 //
 // Cadence (env or GitHub repo Variables):
 //   POST_DAYS      default "MON,TUE,WED,THU,FRI,SAT,SUN"  (daily)
-//   POST_TIME_UTC  default "17:00"                        (19:00 Berlin / 10am SF)
+//   POST_TIME_UTC  default "17:00"  — one OR MORE times, comma-separated, for
+//                  multiple posts per day, e.g. "13:00,21:00" posts twice daily.
 
 import {
   readdirSync,
@@ -34,31 +35,39 @@ const LINES_PATH = join(ROOT, "content", "lines.json");
 
 const DAY_NAMES = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 
+const toMinutes = (t) => {
+  const [hh, mm] = t.split(":").map(Number);
+  return hh * 60 + mm;
+};
+
 export const cadence = {
   days: (process.env.POST_DAYS || "MON,TUE,WED,THU,FRI,SAT,SUN")
     .split(",")
     .map((s) => s.trim().toUpperCase()),
-  timeUtc: process.env.POST_TIME_UTC || "17:00",
+  // One or more posting times per day (comma-separated "HH:MM"), sorted.
+  timesUtc: (process.env.POST_TIME_UTC || "17:00")
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean)
+    .sort((a, b) => toMinutes(a) - toMinutes(b)),
 };
 
 export function nextSlot(afterMs, cad = cadence) {
-  const [hh, mm] = cad.timeUtc.split(":").map(Number);
+  const times = cad.timesUtc && cad.timesUtc.length ? cad.timesUtc : ["17:00"];
   const base = new Date(afterMs);
   for (let i = 0; i <= 14; i++) {
-    const cand = Date.UTC(
-      base.getUTCFullYear(),
-      base.getUTCMonth(),
-      base.getUTCDate() + i,
-      hh,
-      mm,
-      0,
-      0
-    );
-    if (cand > afterMs && cad.days.includes(DAY_NAMES[new Date(cand).getUTCDay()])) {
-      return new Date(cand);
+    const y = base.getUTCFullYear();
+    const mo = base.getUTCMonth();
+    const d = base.getUTCDate() + i;
+    const dow = new Date(Date.UTC(y, mo, d)).getUTCDay();
+    if (!cad.days.includes(DAY_NAMES[dow])) continue;
+    for (const t of times) {
+      const [hh, mm] = t.split(":").map(Number);
+      const cand = Date.UTC(y, mo, d, hh, mm, 0, 0);
+      if (cand > afterMs) return new Date(cand);
     }
   }
-  throw new Error(`No posting day within 14 days — check POST_DAYS.`);
+  throw new Error(`No posting slot within 14 days — check POST_DAYS/POST_TIME_UTC.`);
 }
 
 /** Already scheduled/posted? Matched by the ORIGINAL source filename. */
@@ -104,6 +113,10 @@ function buildVisionSystem(brand) {
     "  used as the caption. 4-13 words. Lowercase. No hashtags, no emojis, no quotes.",
     "- Match the registers and structures in the brand. It must sound like the",
     "  voice_examples — deadpan, unhinged-confident, a punchline. Never wholesome.",
+    "- FUNNY IS THE ONLY JOB. Aim for a laugh — the kind of line someone",
+    "  screenshots and sends to the group chat. Surprising, a little unhinged,",
+    "  filthy-but-clever is on-brand. Safe, tame, or generic = failure; if it",
+    "  could go on any influencer's photo, it's wrong. Land a real punchline.",
     "- You MAY riff on what's in the photo (wine, travel, an outfit, a mood) but",
     "  the joke leads; the photo is just the excuse.",
     "- Do NOT reuse or closely echo any voice_example or any line in the used list.",
