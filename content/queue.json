@@ -25,13 +25,15 @@
   },
   {
     "id": "2026-07-12-35eb79b4-20fb-4a4f-86a2-198a990555e9-2",
-    "status": "scheduled",
+    "status": "published",
     "publish_at": "2026-07-12T13:00:00.000Z",
     "media_type": "IMAGE",
     "media_url": "https://raw.githubusercontent.com/Lindadao92/ig-autopilot/main/media/rendered/post-35eb79b4-20fb-4a4f-86a2-198a990555e9-2.jpg",
     "alt_text": "manifested a soulmate, got a monkey forest instead",
     "caption": "manifested a soulmate, got a monkey forest instead",
-    "source_file": "35eb79b4-20fb-4a4f-86a2-198a990555e9 2.JPG"
+    "source_file": "35eb79b4-20fb-4a4f-86a2-198a990555e9 2.JPG",
+    "published_at": "2026-07-12T14:09:36.365Z",
+    "media_id": "18113128126926924"
   },
   {
     "id": "2026-07-12-8bfa75e8-d4f7-425d-8a56-408f342d23c3-2",
