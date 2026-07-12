@@ -9,17 +9,25 @@
 // white fill (paint-order) — one text layer, so no ghosting/doubling.
 
 import { join } from "node:path";
-import { writeFileSync } from "node:fs";
+import { writeFileSync, mkdirSync } from "node:fs";
 import { ROOT } from "./config.js";
 
-// Point fontconfig at the bundled font before sharp's native lib loads.
+// Point fontconfig at the bundled Archivo Black before sharp's native lib loads.
+// We write a fonts.conf into a dedicated directory and export BOTH
+// FONTCONFIG_PATH (the directory — honored by sharp's bundled fontconfig on
+// macOS) and FONTCONFIG_FILE (the file — honored on Linux/CI). macOS ignores
+// FONTCONFIG_FILE, which is why the font previously fell back to a light
+// system sans locally; FONTCONFIG_PATH is what makes it resolve there.
 const FONT_DIR = join(ROOT, "assets", "fonts");
-const FC_PATH = "/tmp/ig-autopilot-fonts.conf";
+const FC_DIR = "/tmp/ig-autopilot-fontconfig";
+const FC_FILE = join(FC_DIR, "fonts.conf");
+mkdirSync(FC_DIR, { recursive: true });
 writeFileSync(
-  FC_PATH,
-  `<?xml version="1.0"?>\n<!DOCTYPE fontconfig SYSTEM "fonts.dtd">\n<fontconfig>\n  <dir>${FONT_DIR}</dir>\n  <cachedir>/tmp/ig-autopilot-fontcache</cachedir>\n</fontconfig>\n`
+  FC_FILE,
+  `<?xml version="1.0"?>\n<!DOCTYPE fontconfig SYSTEM "fonts.dtd">\n<fontconfig>\n  <dir>${FONT_DIR}</dir>\n  <cachedir>${FC_DIR}/cache</cachedir>\n</fontconfig>\n`
 );
-process.env.FONTCONFIG_FILE = FC_PATH;
+process.env.FONTCONFIG_PATH = FC_DIR;
+process.env.FONTCONFIG_FILE = FC_FILE;
 const sharp = (await import("sharp")).default;
 
 const W = 1080;
