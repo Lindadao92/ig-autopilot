@@ -37,13 +37,15 @@
   },
   {
     "id": "2026-07-12-8bfa75e8-d4f7-425d-8a56-408f342d23c3-2",
-    "status": "scheduled",
+    "status": "published",
     "publish_at": "2026-07-12T21:00:00.000Z",
     "media_type": "IMAGE",
     "media_url": "https://raw.githubusercontent.com/Lindadao92/ig-autopilot/main/media/rendered/post-8bfa75e8-d4f7-425d-8a56-408f342d23c3-2.jpg",
     "alt_text": "went all in emotionally once. folded immediately.",
     "caption": "went all in emotionally once. folded immediately.",
-    "source_file": "8bfa75e8-d4f7-425d-8a56-408f342d23c3 2.JPG"
+    "source_file": "8bfa75e8-d4f7-425d-8a56-408f342d23c3 2.JPG",
+    "published_at": "2026-07-12T22:02:19.714Z",
+    "media_id": "18603543382007627"
   },
   {
     "id": "2026-07-13-facetune-12-10-2024-19-22-23",
