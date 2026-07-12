@@ -108,25 +108,27 @@ function buildVisionSystem(brand) {
     "BRAND:",
     JSON.stringify(brand, null, 2),
     "",
-    "JOB 1 — WRITE THE LINE:",
-    "- One original one-liner in the brand voice, printed ON the photo AND used as",
-    "  the caption. 4-13 words. Lowercase. No hashtags, no emojis, no quotes.",
-    "- THE HUMOR COMES FIRST, NOT THE PHOTO. Your #1 job is to nail the exact",
-    "  comedic voice of the voice_examples: self-aware dating/ex/situationship",
-    "  carnage, delusion played as confidence, self-roast, deadpan horny, money/",
-    "  ambition twisted, rock-bottom-as-a-flex. Structures: reversal, misdirection,",
-    "  fake-vulnerable-then-punch. It must sound like it belongs in voice_examples",
-    "  ('i don't have exes, i have case studies'; 'he said i was hard to love. skill",
-    "  issue.'; 'delusion is just confidence that hasn't been proven right yet').",
-    "- The line does NOT need to relate to the photo. It is completely fine — often",
-    "  BETTER — to write a pure standalone punchline with nothing to do with the",
-    "  image. Do NOT force a reference. Never merely describe the scene ('two",
-    "  seafood pastas', 'won the pot', 'held the cat up') — that observational",
-    "  style is the #1 failure.",
-    "- ONLY weave in the photo if the tie-in is genuinely clever AND funnier than a",
-    "  standalone line would be. If in doubt, ignore the photo and just be funny.",
-    "- Gut check: would this make someone screenshot and send it to the group chat?",
-    "  If it's tame, generic, or just a caption of the picture, rewrite it.",
+    "JOB 1 — WRITE THE LINE (this is the whole game — make it genuinely FUNNY):",
+    "- One original one-liner in the brand voice: 4-13 words, lowercase, no",
+    "  hashtags, no emojis, no quotes.",
+    "- IGNORE THE PHOTO for the joke. Write a STANDALONE punchline that would kill",
+    "  with NO image at all, exactly like the voice_examples. The photo is only for",
+    "  text placement (JOB 2) — it is NOT your material. Describing the scene is the",
+    "  #1 failure ('two seafood pastas', 'won the pot', 'held the cat up' — banned).",
+    "- BE BOLD AND FILTHY-CLEVER. The voice_examples are savage, horny, deadpan, and",
+    "  self-destructive: 'sex is my cardio. which explains why i'm fat', 'you don't",
+    "  need a driving license to ride me', 'i don't have exes, i have case studies',",
+    "  'he said i was hard to love. skill issue.', 'hey siri, turn off my feelings",
+    "  forever'. MATCH THAT EDGE. Tame, cute, wholesome, or safe = boring = failure.",
+    "- RANGE WIDELY so the set never feels samey — rotate through: delusion-as-",
+    "  confidence, dating/ex/situationship carnage, deadpan horny, money/ambition",
+    "  twisted, rock-bottom-as-a-flex, absurd non-sequitur. Vary the STRUCTURE every",
+    "  time (reversal, misdirection, fake-vulnerable-then-punch, corporate metaphor).",
+    "- BANNED TEMPLATE: '[some noun] + still can't [verb] a man/him/text'. If your",
+    "  line contains 'still can't ... him/man/text', throw it out and write a real,",
+    "  surprising punchline instead.",
+    "- Gut check: would someone screenshot this and send it to the group chat? If",
+    "  it's mild, predictable, or formulaic, delete it and go harder.",
     "- Do NOT reuse or closely echo any voice_example or any line in the used list.",
     "",
     "JOB 2 — PLACE THE TEXT (it must NEVER touch the face):",
@@ -145,48 +147,77 @@ function buildVisionSystem(brand) {
   ].join("\n");
 }
 
+/** Pull a JSON object out of a model response, tolerant of fences/prose. */
+function extractJson(text) {
+  const stripped = text.replace(/^```(?:json)?/i, "").replace(/```$/i, "").trim();
+  // Try the whole thing first, then the outermost { ... } block.
+  for (const candidate of [stripped, stripped.slice(stripped.indexOf("{"), stripped.lastIndexOf("}") + 1)]) {
+    try {
+      const obj = JSON.parse(candidate);
+      if (obj && typeof obj === "object") return obj;
+    } catch {
+      /* try next candidate */
+    }
+  }
+  return null;
+}
+
 export async function analyzePhoto(filePath, filename, brand, usedLines) {
   const b64 = readFileSync(filePath).toString("base64");
   const ext = extname(filename).toLowerCase();
   const mediaType = ext === ".png" ? "image/png" : "image/jpeg";
-  const res = await fetch("https://api.anthropic.com/v1/messages", {
-    method: "POST",
-    headers: {
-      "content-type": "application/json",
-      "x-api-key": config.anthropicApiKey,
-      "anthropic-version": "2023-06-01",
-    },
-    body: JSON.stringify({
-      model: config.anthropicModel,
-      max_tokens: 800,
-      system: buildVisionSystem(brand),
-      messages: [
-        {
-          role: "user",
-          content: [
-            { type: "image", source: { type: "base64", media_type: mediaType, data: b64 } },
-            {
-              type: "text",
-              text:
-                `Recently used lines (avoid echoing):\n${JSON.stringify(usedLines.slice(-120))}\n\n` +
-                "Write the line and report text placement for this selfie.",
-            },
-          ],
-        },
-      ],
-    }),
+  const body = JSON.stringify({
+    model: config.anthropicModel,
+    max_tokens: 1024,
+    system: buildVisionSystem(brand),
+    messages: [
+      {
+        role: "user",
+        content: [
+          { type: "image", source: { type: "base64", media_type: mediaType, data: b64 } },
+          {
+            type: "text",
+            text:
+              `Recently used lines (avoid echoing):\n${JSON.stringify(usedLines.slice(-120))}\n\n` +
+              "Write the line and report text placement for this selfie.",
+          },
+        ],
+      },
+    ],
   });
-  const data = await res.json();
-  if (!res.ok || data.error) {
-    throw new Error(`Anthropic API error: ${JSON.stringify(data.error || data)}`);
+
+  // The model occasionally returns truncated/malformed JSON; retry a few times
+  // before giving up so a single bad response doesn't drop the whole image.
+  let lastErr;
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    try {
+      const res = await fetch("https://api.anthropic.com/v1/messages", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          "x-api-key": config.anthropicApiKey,
+          "anthropic-version": "2023-06-01",
+        },
+        body,
+      });
+      const data = await res.json();
+      if (!res.ok || data.error) {
+        throw new Error(`Anthropic API error: ${JSON.stringify(data.error || data)}`);
+      }
+      const text = (data.content || [])
+        .filter((b) => b.type === "text")
+        .map((b) => b.text)
+        .join("\n")
+        .trim();
+      const parsed = extractJson(text);
+      if (parsed && parsed.line) return parsed;
+      throw new Error(`Could not parse a valid line from response: ${text.slice(0, 120)}`);
+    } catch (err) {
+      lastErr = err;
+      if (attempt < 3) await new Promise((r) => setTimeout(r, 800 * attempt));
+    }
   }
-  const text = (data.content || [])
-    .filter((b) => b.type === "text")
-    .map((b) => b.text)
-    .join("\n")
-    .trim();
-  const cleaned = text.replace(/^```(?:json)?/i, "").replace(/```$/i, "").trim();
-  return JSON.parse(cleaned);
+  throw lastErr;
 }
 
 async function main() {
