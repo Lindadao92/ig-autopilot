@@ -61,13 +61,15 @@
   },
   {
     "id": "2026-07-14-img-0044",
-    "status": "scheduled",
+    "status": "published",
     "publish_at": "2026-07-14T21:00:00.000Z",
     "media_type": "IMAGE",
     "media_url": "https://raw.githubusercontent.com/Lindadao92/ig-autopilot/main/media/rendered/post-img-0044.jpg",
     "alt_text": "i said i was fine. i was just boiling.",
     "caption": "i said i was fine. i was just boiling.",
-    "source_file": "IMG_0044.jpg"
+    "source_file": "IMG_0044.jpg",
+    "published_at": "2026-07-14T21:06:03.753Z",
+    "media_id": "17987203121992631"
   },
   {
     "id": "2026-07-15-img-0232",
