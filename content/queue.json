@@ -85,13 +85,15 @@
   },
   {
     "id": "2026-07-15-img-0285",
-    "status": "scheduled",
+    "status": "published",
     "publish_at": "2026-07-15T21:00:00.000Z",
     "media_type": "IMAGE",
     "media_url": "https://raw.githubusercontent.com/Lindadao92/ig-autopilot/main/media/rendered/post-img-0285.jpg",
     "alt_text": "these wings are decorative. the delusion is load-bearing.",
     "caption": "these wings are decorative. the delusion is load-bearing.",
-    "source_file": "IMG_0285.jpg"
+    "source_file": "IMG_0285.jpg",
+    "published_at": "2026-07-15T22:07:35.626Z",
+    "media_id": "17887980360669950"
   },
   {
     "id": "2026-07-16-img-0492",
