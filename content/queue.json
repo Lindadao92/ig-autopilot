@@ -73,13 +73,15 @@
   },
   {
     "id": "2026-07-15-img-0232",
-    "status": "scheduled",
+    "status": "published",
     "publish_at": "2026-07-15T13:00:00.000Z",
     "media_type": "IMAGE",
     "media_url": "https://raw.githubusercontent.com/Lindadao92/ig-autopilot/main/media/rendered/post-img-0232.jpg",
     "alt_text": "each candle's a red flag i decided to keep",
     "caption": "each candle's a red flag i decided to keep",
-    "source_file": "IMG_0232.jpg"
+    "source_file": "IMG_0232.jpg",
+    "published_at": "2026-07-15T14:22:08.106Z",
+    "media_id": "18120719539804579"
   },
   {
     "id": "2026-07-15-img-0285",
