@@ -109,13 +109,15 @@
   },
   {
     "id": "2026-07-16-img-0507",
-    "status": "scheduled",
+    "status": "published",
     "publish_at": "2026-07-16T21:00:00.000Z",
     "media_type": "IMAGE",
     "media_url": "https://raw.githubusercontent.com/Lindadao92/ig-autopilot/main/media/rendered/post-img-0507.jpg",
     "alt_text": "emotionally unavailable but I will finish this whole steak",
     "caption": "emotionally unavailable but I will finish this whole steak",
-    "source_file": "IMG_0507.jpg"
+    "source_file": "IMG_0507.jpg",
+    "published_at": "2026-07-16T21:38:58.789Z",
+    "media_id": "17946131271243092"
   },
   {
     "id": "2026-07-17-img-0516-3",
