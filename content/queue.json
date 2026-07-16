@@ -97,13 +97,15 @@
   },
   {
     "id": "2026-07-16-img-0492",
-    "status": "scheduled",
+    "status": "published",
     "publish_at": "2026-07-16T13:00:00.000Z",
     "media_type": "IMAGE",
     "media_url": "https://raw.githubusercontent.com/Lindadao92/ig-autopilot/main/media/rendered/post-img-0492.jpg",
     "alt_text": "i peaked so hard i had to move to a different city",
     "caption": "i peaked so hard i had to move to a different city",
-    "source_file": "IMG_0492.jpg"
+    "source_file": "IMG_0492.jpg",
+    "published_at": "2026-07-16T14:34:40.679Z",
+    "media_id": "17947718772211260"
   },
   {
     "id": "2026-07-16-img-0507",
