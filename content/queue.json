@@ -121,13 +121,15 @@
   },
   {
     "id": "2026-07-17-img-0516-3",
-    "status": "scheduled",
+    "status": "published",
     "publish_at": "2026-07-17T13:00:00.000Z",
     "media_type": "IMAGE",
     "media_url": "https://raw.githubusercontent.com/Lindadao92/ig-autopilot/main/media/rendered/post-img-0516-3.jpg",
     "alt_text": "delusion got me a view like this and no man",
     "caption": "delusion got me a view like this and no man",
-    "source_file": "IMG_0516 3.jpg"
+    "source_file": "IMG_0516 3.jpg",
+    "published_at": "2026-07-17T14:48:08.694Z",
+    "media_id": "18005439440948871"
   },
   {
     "id": "2026-07-17-img-0553",
