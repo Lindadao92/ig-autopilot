@@ -145,13 +145,15 @@
   },
   {
     "id": "2026-07-18-img-0554",
-    "status": "scheduled",
+    "status": "published",
     "publish_at": "2026-07-18T13:00:00.000Z",
     "media_type": "IMAGE",
     "media_url": "https://raw.githubusercontent.com/Lindadao92/ig-autopilot/main/media/rendered/post-img-0554.jpg",
     "alt_text": "i don't need a compass, i already know he's wrong",
     "caption": "i don't need a compass, i already know he's wrong",
-    "source_file": "IMG_0554.jpg"
+    "source_file": "IMG_0554.jpg",
+    "published_at": "2026-07-18T13:35:48.824Z",
+    "media_id": "17951230650206813"
   },
   {
     "id": "2026-07-18-img-0559-2",
