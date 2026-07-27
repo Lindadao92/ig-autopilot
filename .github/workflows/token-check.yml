@@ -1,0 +1,29 @@
+name: Check Instagram token
+
+# Confirms IG_ACCESS_TOKEN still works, without ever printing it.
+# Only the account id/username and the HTTP status are logged.
+
+on:
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Call /me with the stored token
+        env:
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+        run: |
+          code=$(curl -s -o /tmp/me.json -w "%{http_code}" \
+            "https://graph.instagram.com/me?fields=id,username&access_token=${IG_ACCESS_TOKEN}")
+          echo "HTTP $code"
+          if [[ "$code" == "200" ]]; then
+            echo "TOKEN OK"
+            python3 -c "import json;d=json.load(open('/tmp/me.json'));print('account:',d.get('username'),d.get('id'))"
+          else
+            echo "TOKEN NOT USABLE"
+            python3 -c "import json;d=json.load(open('/tmp/me.json'));e=d.get('error',{});print('error:',e.get('type'),e.get('code'),e.get('message'))"
+            exit 1
+          fi
