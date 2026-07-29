@@ -1178,5 +1178,25 @@
     "alt_text": "i said i wanted flowers. i meant a whole apology tour.",
     "caption": "i said i wanted flowers. i meant a whole apology tour.",
     "source_file": "f125f994-474b-4a62-82e6-ccc7a442ef44.JPG"
+  },
+  {
+    "id": "2026-09-02-quote-boring-planet",
+    "status": "scheduled",
+    "publish_at": "2026-09-02T13:00:00.000Z",
+    "media_type": "IMAGE",
+    "media_url": "https://raw.githubusercontent.com/Lindadao92/ig-autopilot/main/media/rendered/post-quote-boring-planet.jpg",
+    "alt_text": "A statement card reading: what a boring planet, no fairies, no mermaids, no dragons.. just bills & irritating people",
+    "caption": "what a boring planet, no fairies, no mermaids, no dragons.. just bills & irritating people",
+    "source_file": "quote-boring-planet.jpg"
+  },
+  {
+    "id": "2026-09-03-quote-not-all-men",
+    "status": "scheduled",
+    "publish_at": "2026-09-03T13:00:00.000Z",
+    "media_type": "IMAGE",
+    "media_url": "https://raw.githubusercontent.com/Lindadao92/ig-autopilot/main/media/rendered/post-quote-not-all-men.jpg",
+    "alt_text": "A statement card reading: funny how men say \"not all men are the same\" but when their gf has a male friend they be like \"i know how all men think\"",
+    "caption": "funny how men say \"not all men are the same\" but when their gf has a male friend they be like \"i know how all men think\"",
+    "source_file": "quote-not-all-men.jpg"
   }
 ]
