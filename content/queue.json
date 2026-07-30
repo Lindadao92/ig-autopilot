@@ -203,13 +203,15 @@
   },
   {
     "id": "2026-07-30-img-0726",
-    "status": "scheduled",
+    "status": "published",
     "publish_at": "2026-07-30T13:00:00.000Z",
     "media_type": "IMAGE",
     "media_url": "https://raw.githubusercontent.com/Lindadao92/ig-autopilot/main/media/rendered/post-img-0726.jpg",
     "alt_text": "sometimes all a person needs is that one missing piece - one billion dollar",
     "caption": "sometimes all a person needs is that one missing piece - one billion dollar",
-    "source_file": "IMG_0726.jpg"
+    "source_file": "IMG_0726.jpg",
+    "published_at": "2026-07-30T13:41:37.600Z",
+    "media_id": "18095428850372415"
   },
   {
     "id": "2026-07-31-img-0795",
