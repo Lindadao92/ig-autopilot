@@ -215,13 +215,15 @@
   },
   {
     "id": "2026-07-31-img-0795",
-    "status": "scheduled",
+    "status": "published",
     "publish_at": "2026-07-31T13:00:00.000Z",
     "media_type": "IMAGE",
     "media_url": "https://raw.githubusercontent.com/Lindadao92/ig-autopilot/main/media/rendered/post-img-0795.jpg",
     "alt_text": "you deserve someone better than me is some shit u'll never hear me say",
     "caption": "you deserve someone better than me is some shit u'll never hear me say",
-    "source_file": "IMG_0795.JPG"
+    "source_file": "IMG_0795.JPG",
+    "published_at": "2026-07-31T13:45:52.666Z",
+    "media_id": "17962546854159334"
   },
   {
     "id": "2026-08-01-img-0811-2",
