@@ -227,13 +227,15 @@
   },
   {
     "id": "2026-08-01-img-0811-2",
-    "status": "scheduled",
+    "status": "published",
     "publish_at": "2026-08-01T13:00:00.000Z",
     "media_type": "IMAGE",
     "media_url": "https://raw.githubusercontent.com/Lindadao92/ig-autopilot/main/media/rendered/post-img-0811-2.jpg",
     "alt_text": "i love your personality. thanks, it's a disorder",
     "caption": "i love your personality. thanks, it's a disorder",
-    "source_file": "IMG_0811 2.jpg"
+    "source_file": "IMG_0811 2.jpg",
+    "published_at": "2026-08-01T13:01:40.663Z",
+    "media_id": "17940884856075346"
   },
   {
     "id": "2026-08-02-img-0919",
