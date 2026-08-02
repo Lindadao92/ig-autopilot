@@ -239,13 +239,15 @@
   },
   {
     "id": "2026-08-02-img-0919",
-    "status": "scheduled",
+    "status": "published",
     "publish_at": "2026-08-02T13:00:00.000Z",
     "media_type": "IMAGE",
     "media_url": "https://raw.githubusercontent.com/Lindadao92/ig-autopilot/main/media/rendered/post-img-0919.jpg",
     "alt_text": "when you're sleeping with someone from another country, you better give it 100%. remember: you're representing your entire nation.",
     "caption": "when you're sleeping with someone from another country, you better give it 100%. remember: you're representing your entire nation.",
-    "source_file": "IMG_0919.jpg"
+    "source_file": "IMG_0919.jpg",
+    "published_at": "2026-08-02T14:24:48.147Z",
+    "media_id": "18100631717241240"
   },
   {
     "id": "2026-08-03-img-0953",
