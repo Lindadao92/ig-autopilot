@@ -263,13 +263,15 @@
   },
   {
     "id": "2026-08-04-img-1067",
-    "status": "scheduled",
+    "status": "published",
     "publish_at": "2026-08-04T13:00:00.000Z",
     "media_type": "IMAGE",
     "media_url": "https://raw.githubusercontent.com/Lindadao92/ig-autopilot/main/media/rendered/post-img-1067.jpg",
     "alt_text": "sorry i won't block u even my blocklist has standards",
     "caption": "sorry i won't block u even my blocklist has standards",
-    "source_file": "IMG_1067.jpg"
+    "source_file": "IMG_1067.jpg",
+    "published_at": "2026-08-04T14:58:00.760Z",
+    "media_id": "18110930011993436"
   },
   {
     "id": "2026-08-05-img-1076",
