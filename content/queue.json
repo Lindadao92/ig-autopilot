@@ -275,13 +275,15 @@
   },
   {
     "id": "2026-08-05-img-1076",
-    "status": "scheduled",
+    "status": "published",
     "publish_at": "2026-08-05T13:00:00.000Z",
     "media_type": "IMAGE",
     "media_url": "https://raw.githubusercontent.com/Lindadao92/ig-autopilot/main/media/rendered/post-img-1076.jpg",
     "alt_text": "i wonder who's praying this hard for me to stay single",
     "caption": "i wonder who's praying this hard for me to stay single",
-    "source_file": "IMG_1076.jpg"
+    "source_file": "IMG_1076.jpg",
+    "published_at": "2026-08-05T15:13:09.211Z",
+    "media_id": "17952368889208213"
   },
   {
     "id": "2026-08-06-img-1097",
