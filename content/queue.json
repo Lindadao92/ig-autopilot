@@ -287,13 +287,15 @@
   },
   {
     "id": "2026-08-06-img-1097",
-    "status": "scheduled",
+    "status": "published",
     "publish_at": "2026-08-06T13:00:00.000Z",
     "media_type": "IMAGE",
     "media_url": "https://raw.githubusercontent.com/Lindadao92/ig-autopilot/main/media/rendered/post-img-1097.jpg",
     "alt_text": "i will be funny and hot again soon guys just fighting for my life rn",
     "caption": "i will be funny and hot again soon guys just fighting for my life rn",
-    "source_file": "IMG_1097.jpg"
+    "source_file": "IMG_1097.jpg",
+    "published_at": "2026-08-07T00:37:03.642Z",
+    "media_id": "18151499668511898"
   },
   {
     "id": "2026-08-07-img-1115",
