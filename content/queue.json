@@ -299,13 +299,15 @@
   },
   {
     "id": "2026-08-07-img-1115",
-    "status": "scheduled",
+    "status": "published",
     "publish_at": "2026-08-07T13:00:00.000Z",
     "media_type": "IMAGE",
     "media_url": "https://raw.githubusercontent.com/Lindadao92/ig-autopilot/main/media/rendered/post-img-1115.jpg",
     "alt_text": "\"you only live once\" thank god",
     "caption": "\"you only live once\" thank god",
-    "source_file": "IMG_1115.jpg"
+    "source_file": "IMG_1115.jpg",
+    "published_at": "2026-08-07T13:47:02.270Z",
+    "media_id": "17892280449397747"
   },
   {
     "id": "2026-08-08-img-1122",
