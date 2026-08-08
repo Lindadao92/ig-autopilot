@@ -311,13 +311,15 @@
   },
   {
     "id": "2026-08-08-img-1122",
-    "status": "scheduled",
+    "status": "published",
     "publish_at": "2026-08-08T13:00:00.000Z",
     "media_type": "IMAGE",
     "media_url": "https://raw.githubusercontent.com/Lindadao92/ig-autopilot/main/media/rendered/post-img-1122.jpg",
     "alt_text": "biggest mistake: i gave my heart to someone who needed a brain",
     "caption": "biggest mistake: i gave my heart to someone who needed a brain",
-    "source_file": "IMG_1122.jpg"
+    "source_file": "IMG_1122.jpg",
+    "published_at": "2026-08-08T13:39:24.436Z",
+    "media_id": "18477869521105769"
   },
   {
     "id": "2026-08-09-img-1152",
