@@ -323,13 +323,15 @@
   },
   {
     "id": "2026-08-09-img-1152",
-    "status": "scheduled",
+    "status": "published",
     "publish_at": "2026-08-09T13:00:00.000Z",
     "media_type": "IMAGE",
     "media_url": "https://raw.githubusercontent.com/Lindadao92/ig-autopilot/main/media/rendered/post-img-1152.jpg",
     "alt_text": "i don't date often but when i do, i choose the wrong one",
     "caption": "i don't date often but when i do, i choose the wrong one",
-    "source_file": "IMG_1152.JPG"
+    "source_file": "IMG_1152.JPG",
+    "published_at": "2026-08-09T13:42:39.166Z",
+    "media_id": "17902894284472352"
   },
   {
     "id": "2026-08-10-img-1188",
