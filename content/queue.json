@@ -347,13 +347,15 @@
   },
   {
     "id": "2026-08-11-img-1219",
-    "status": "scheduled",
+    "status": "published",
     "publish_at": "2026-08-11T13:00:00.000Z",
     "media_type": "IMAGE",
     "media_url": "https://raw.githubusercontent.com/Lindadao92/ig-autopilot/main/media/rendered/post-img-1219.jpg",
     "alt_text": "you gave each other too much advice and now you're both single",
     "caption": "you gave each other too much advice and now you're both single",
-    "source_file": "IMG_1219.jpg"
+    "source_file": "IMG_1219.jpg",
+    "published_at": "2026-08-11T13:51:16.064Z",
+    "media_id": "18120756424865912"
   },
   {
     "id": "2026-08-12-img-1259",
