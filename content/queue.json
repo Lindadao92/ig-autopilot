@@ -359,13 +359,15 @@
   },
   {
     "id": "2026-08-12-img-1259",
-    "status": "scheduled",
+    "status": "published",
     "publish_at": "2026-08-12T13:00:00.000Z",
     "media_type": "IMAGE",
     "media_url": "https://raw.githubusercontent.com/Lindadao92/ig-autopilot/main/media/rendered/post-img-1259.jpg",
     "alt_text": "me adding geologist to my resume after hitting rock bottom",
     "caption": "me adding geologist to my resume after hitting rock bottom",
-    "source_file": "IMG_1259.jpg"
+    "source_file": "IMG_1259.jpg",
+    "published_at": "2026-08-12T14:16:30.281Z",
+    "media_id": "17981771634050782"
   },
   {
     "id": "2026-08-13-img-1517",
