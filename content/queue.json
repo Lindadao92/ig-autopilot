@@ -371,13 +371,15 @@
   },
   {
     "id": "2026-08-13-img-1517",
-    "status": "scheduled",
+    "status": "published",
     "publish_at": "2026-08-13T13:00:00.000Z",
     "media_type": "IMAGE",
     "media_url": "https://raw.githubusercontent.com/Lindadao92/ig-autopilot/main/media/rendered/post-img-1517.jpg",
     "alt_text": "you don't need a driving license to ride me",
     "caption": "you don't need a driving license to ride me",
-    "source_file": "IMG_1517.jpg"
+    "source_file": "IMG_1517.jpg",
+    "published_at": "2026-08-13T14:18:22.541Z",
+    "media_id": "18107430995137987"
   },
   {
     "id": "2026-08-14-img-1565",
