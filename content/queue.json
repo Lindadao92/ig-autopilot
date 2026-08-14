@@ -383,13 +383,15 @@
   },
   {
     "id": "2026-08-14-img-1565",
-    "status": "scheduled",
+    "status": "published",
     "publish_at": "2026-08-14T13:00:00.000Z",
     "media_type": "IMAGE",
     "media_url": "https://raw.githubusercontent.com/Lindadao92/ig-autopilot/main/media/rendered/post-img-1565.jpg",
     "alt_text": "here's a rock from the rock bottom i hit",
     "caption": "here's a rock from the rock bottom i hit",
-    "source_file": "IMG_1565.jpg"
+    "source_file": "IMG_1565.jpg",
+    "published_at": "2026-08-14T14:10:56.605Z",
+    "media_id": "18100591130342743"
   },
   {
     "id": "2026-08-15-img-1582",
