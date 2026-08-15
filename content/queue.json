@@ -395,13 +395,15 @@
   },
   {
     "id": "2026-08-15-img-1582",
-    "status": "scheduled",
+    "status": "published",
     "publish_at": "2026-08-15T13:00:00.000Z",
     "media_type": "IMAGE",
     "media_url": "https://raw.githubusercontent.com/Lindadao92/ig-autopilot/main/media/rendered/post-img-1582.jpg",
     "alt_text": "u can't go crazy if you're already crazy",
     "caption": "u can't go crazy if you're already crazy",
-    "source_file": "IMG_1582.jpg"
+    "source_file": "IMG_1582.jpg",
+    "published_at": "2026-08-15T13:06:33.492Z",
+    "media_id": "18121878451845444"
   },
   {
     "id": "2026-08-16-img-1743",
