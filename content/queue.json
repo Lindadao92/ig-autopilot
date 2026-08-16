@@ -407,13 +407,15 @@
   },
   {
     "id": "2026-08-16-img-1743",
-    "status": "scheduled",
+    "status": "published",
     "publish_at": "2026-08-16T13:00:00.000Z",
     "media_type": "IMAGE",
     "media_url": "https://raw.githubusercontent.com/Lindadao92/ig-autopilot/main/media/rendered/post-img-1743.jpg",
     "alt_text": "sex is my cardio. which explains why i'm fat",
     "caption": "sex is my cardio. which explains why i'm fat",
-    "source_file": "IMG_1743.JPG"
+    "source_file": "IMG_1743.JPG",
+    "published_at": "2026-08-16T13:08:18.880Z",
+    "media_id": "18170657428443317"
   },
   {
     "id": "2026-08-17-img-1769",
